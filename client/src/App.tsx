@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react';
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+//COMPONENTS
+import InputField from './components/InputField'
+import TodoList from "./components/TodoList";
+//MODEL
+import Todo from "./models/todo";
+
+const  App : React.FC = () => {
+  
+  const [todo, setTodo] = useState<string>("")
+
+  const [todos, setTodos] = useState<Todo[]>([])
+
+  const handleAdd = (e: React.FormEvent) => {
+
+    if(todo){
+      setTodos([...todos, {id: Date.now(), todo: todo, isDone: false}])
+    }
+    else{
+      console.log("No Todo")
+    }
+      setTodo("");
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    console.log(todos)
+  }, [todos])
+  
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <span className="heading">Taskitty</span>
+      <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd}/>
+      <br/>
+      <TodoList todos={todos} setTodos={setTodos} />
+    </div>
+  );
 }
 
 export default App
