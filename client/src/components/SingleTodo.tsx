@@ -29,12 +29,12 @@ const SingleTodo: React.FC<Props> = ({todo, todos, setTodos}) => {
         <span className="todos_single--text">{todo.todo}</span>
       )}
       <div>
-        <span className="icon">
+        {/* <span className="icon">
           <CiEdit />
         </span>
         <span className="icon">
           <CiTrash />
-        </span>
+        </span> */}
 
         <span className="icon">
           <CiCircleCheck onClick={() => handleDone(todo.id)} />
